@@ -45,7 +45,7 @@ import org.eclipse.hawkbit.repository.model.SoftwareModuleType;
 import org.eclipse.hawkbit.repository.model.TenantMetaData;
 import org.eclipse.hawkbit.repository.model.report.SystemUsageReport;
 import org.eclipse.hawkbit.repository.model.report.SystemUsageReportWithTenants;
-import org.eclipse.hawkbit.security.SystemSecurityContext;
+import org.eclipse.hawkbit.context.SystemSecurityContext;
 import org.eclipse.hawkbit.tenancy.TenantAware;
 import org.eclipse.hawkbit.tenancy.TenantAwareCacheManager.CacheEvictEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,8 +95,6 @@ public class JpaSystemManagement implements CurrentTenantCacheKeyGenerator, Syst
     private final TenantMetaDataRepository tenantMetaDataRepository;
     private final TenantStatsManagement systemStatsManagement;
     private final SystemManagementCacheKeyGenerator currentTenantCacheKeyGenerator;
-    private final SystemSecurityContext systemSecurityContext;
-    private final TenantAware tenantAware;
     private final PlatformTransactionManager txManager;
     private final EntityManager entityManager;
     private final RepositoryProperties repositoryProperties;
@@ -113,7 +111,7 @@ public class JpaSystemManagement implements CurrentTenantCacheKeyGenerator, Syst
             final DistributionSetTagRepository distributionSetTagRepository, final RolloutRepository rolloutRepository,
             final TenantConfigurationRepository tenantConfigurationRepository, final TenantMetaDataRepository tenantMetaDataRepository,
             final TenantStatsManagement systemStatsManagement, final SystemManagementCacheKeyGenerator currentTenantCacheKeyGenerator,
-            final SystemSecurityContext systemSecurityContext, final TenantAware tenantAware, final PlatformTransactionManager txManager,
+            final PlatformTransactionManager txManager,
             final EntityManager entityManager, final RepositoryProperties repositoryProperties,
             final JpaProperties properties) {
         this.targetRepository = targetRepository;
@@ -130,8 +128,6 @@ public class JpaSystemManagement implements CurrentTenantCacheKeyGenerator, Syst
         this.tenantMetaDataRepository = tenantMetaDataRepository;
         this.systemStatsManagement = systemStatsManagement;
         this.currentTenantCacheKeyGenerator = currentTenantCacheKeyGenerator;
-        this.systemSecurityContext = systemSecurityContext;
-        this.tenantAware = tenantAware;
         this.txManager = txManager;
         this.entityManager = entityManager;
         this.repositoryProperties = repositoryProperties;
@@ -161,7 +157,7 @@ public class JpaSystemManagement implements CurrentTenantCacheKeyGenerator, Syst
         }
 
         final String tenant = t.toUpperCase();
-        tenantAware.runAsTenant(tenant, () -> DeploymentHelper.runInNewTransaction(txManager, "deleteTenant", status -> {
+        TenantAware.runAsTenant(tenant, () -> DeploymentHelper.runInNewTransaction(txManager, "deleteTenant", status -> {
             tenantMetaDataRepository.deleteByTenantIgnoreCase(tenant);
             tenantConfigurationRepository.deleteByTenant(tenant);
             targetRepository.deleteByTenant(tenant);
@@ -198,7 +194,7 @@ public class JpaSystemManagement implements CurrentTenantCacheKeyGenerator, Syst
         Pageable query = PageRequest.of(0, MAX_TENANTS_QUERY);
         do {
             tenants = findTenants(query);
-            tenants.forEach(tenant -> tenantAware.runAsTenant(tenant, () -> {
+            tenants.forEach(tenant -> TenantAware.runAsTenant(tenant, () -> {
                 try {
                     consumer.accept(tenant);
                 } catch (final RuntimeException ex) {
@@ -270,7 +266,7 @@ public class JpaSystemManagement implements CurrentTenantCacheKeyGenerator, Syst
     }
 
     private TenantMetaData getTenantMetadata0(final boolean withDetails) {
-        final String tenant = tenantAware.getCurrentTenant();
+        final String tenant = TenantAware.getCurrentTenant();
         if (tenant == null) {
             throw new IllegalStateException("Tenant not set");
         }
@@ -338,20 +334,17 @@ public class JpaSystemManagement implements CurrentTenantCacheKeyGenerator, Syst
     }
 
     /**
-     * Creating the initial tenant meta-data in a new transaction. Due to the
-     * {@link org.eclipse.hawkbit.repository.jpa.configuration.MultiTenantJpaTransactionManager} is using the current tenant to
-     * set the necessary tenant discriminator to the query. This is not working
-     * if we don't have a current tenant set. Due to the
-     * {@link #createTenantMetadata(String)} is maybe called without having a
-     * current tenant we need to re-open a new transaction so the
-     * {@link org.eclipse.hawkbit.repository.jpa.configuration.MultiTenantJpaTransactionManager} is called again and set the
+     * Creating the initial tenant meta-data in a new transaction. Due to the tenant support it is using the current tenant to
+     * set the necessary tenant discriminator to the query. This is not working if we don't have a current tenant set.
+     * Due to the {@link #createTenantMetadata(String)} is maybe called without having a
+     * current tenant we need to re-open a new transaction so the tenant support is called again and set the
      * tenant for this transaction.
      *
      * @param tenant the tenant to be created
      * @return the initial created {@link TenantMetaData}
      */
     private TenantMetaData createInitialTenantMetaData(final String tenant) {
-        return systemSecurityContext.runAsSystemAsTenant(
+        return SystemSecurityContext.runAsSystemAsTenant(
                 () -> DeploymentHelper.runInNewTransaction(txManager, "initial-tenant-creation", status -> {
                     final DistributionSetType defaultDsType = createStandardSoftwareDataSetup();
                     return tenantMetaDataRepository.save(new JpaTenantMetaData(defaultDsType, tenant));

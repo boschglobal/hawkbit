@@ -1,0 +1,262 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-ql-jpa:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-core:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-security-core:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-artifact-api:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-artifact-fs:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-artifact-parent:pom:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-repository-api:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-repository-core:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-repository-jpa-api:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-repository-jpa-eclipselink:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-repository-jpa-hibernate:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-repository-jpa:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-repository-jpa-flyway:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-repository-jpa-init:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-repository-test:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-repository:pom:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-rest-core:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-autoconfigure:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-mgmt-api:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-mgmt-resource:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-mgmt-starter:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-mgmt-server:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-mgmt-parent:pom:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-ddi-api:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-ddi-resource:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-ddi-security:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-ddi-starter:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-ddi-server:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-ddi-parent:pom:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-dmf-api:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-dmf-amqp:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-dmf-starter:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-dmf-server:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-dmf-rabbitmq-test:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-dmf-parent:pom:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-starter:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-update-server:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-monolith-parent:pom:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-ui:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-sdk-commons:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-sdk-mgmt:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-sdk-device:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-sdk-dmf:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-sdk-demo:jar:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-sdk:pom:0-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.eclipse.hawkbit:hawkbit-parent:pom:0-SNAPSHOT
+[WARNING] 'parent.relativePath' of POM org.eclipse.hawkbit:hawkbit-parent:${revision} (/Users/maa1sf/Develop/rollouts/hawkbit/pom.xml) points at rollouts:rollouts instead of org.springframework.boot:spring-boot-starter-parent, please verify your project structure @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 17, column 13
+[WARNING] 'build.plugins.plugin.version' for com.diffplug.spotless:spotless-maven-plugin is missing. @ org.eclipse.hawkbit:hawkbit-parent:${revision}, /Users/maa1sf/Develop/rollouts/hawkbit/pom.xml, line 367, column 21
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] hawkBit :: Parent                                                  [pom]
+[INFO] hawkBit :: Query Language :: JPA                                   [jar]
+[INFO] hawkBit :: Core                                                    [jar]
+[INFO] hawkBit :: Security :: Core                                        [jar]
+[INFO] hawkBit :: Artifact :: Parent                                      [pom]
+[INFO] hawkBit :: Artifact :: API                                         [jar]
+[INFO] hawkBit :: Artifact :: Filesystem Artifact Repository              [jar]
+[INFO] hawkBit :: Repository :: Parent                                    [pom]
+[INFO] hawkBit :: Repository :: API                                       [jar]
+[INFO] hawkBit :: Repository :: Core                                      [jar]
+[INFO] hawkBit :: Repository :: JPA API                                   [jar]
+[INFO] hawkBit :: Repository :: JPA EclipseLink Vendor                    [jar]
+[INFO] hawkBit :: Repository :: JPA Hibernate Vendor                      [jar]
+[INFO] hawkBit :: Repository :: JPA Flyway Migration                      [jar]
+[INFO] hawkBit :: Repository :: Test Utilities                            [jar]
+[INFO] hawkBit :: Repository :: JPA Implementation                        [jar]
+[INFO] hawkBit :: Repository :: JPA DB Init / Upgrade App                 [jar]
+[INFO] hawkBit :: REST :: Core                                            [jar]
+[INFO] hawkBit :: Auto-Configurations                                     [jar]
+[INFO] hawkBit :: Management                                              [pom]
+[INFO] hawkBit :: Management :: REST API                                  [jar]
+[INFO] hawkBit :: Management :: REST Resources                            [jar]
+[INFO] hawkBit :: Management :: Spring Boot Starter                       [jar]
+[INFO] hawkBit :: Management :: Server                                    [jar]
+[INFO] hawkBit :: DDI :: Parent                                           [pom]
+[INFO] hawkBit :: DDI :: REST API                                         [jar]
+[INFO] hawkBit :: DDI :: REST Resources                                   [jar]
+[INFO] hawkBit :: DDI :: Security                                         [jar]
+[INFO] hawkBit :: DDI :: Spring Boot Starter                              [jar]
+[INFO] hawkBit :: DDI :: Server                                           [jar]
+[INFO] hawkBit :: DMF :: Parent                                           [pom]
+[INFO] hawkBit :: DMF :: API                                              [jar]
+[INFO] hawkBit :: DMF :: RabbitMq Test module                             [jar]
+[INFO] hawkBit :: DMF :: AMQP 0.9 Implementation                          [jar]
+[INFO] hawkBit :: DMF :: Spring Boot Starter                              [jar]
+[INFO] hawkBit :: DMF :: Server                                           [jar]
+[INFO] hawkBit :: Monolith :: Parent                                      [pom]
+[INFO] hawkBit :: Monolith :: Spring Boot Starter                         [jar]
+[INFO] hawkBit :: Monolith :: Server                                      [jar]
+[INFO] hawkBit :: SDK :: Parent                                           [pom]
+[INFO] hawkBit :: SDK :: Commons                                          [jar]
+[INFO] hawkBit :: UI                                                      [jar]
+[INFO] hawkBit :: SDK :: Management API SDK                               [jar]
+[INFO] hawkBit :: SDK :: Device SDK                                       [jar]
+[INFO] hawkBit :: SDK :: DMF SDK                                          [jar]
+[INFO] hawkBit :: SDK :: Test / Example                                   [jar]
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-metadata.xml
+Downloading from dash-licenses: https://repo.eclipse.org/content/repositories/dash-licenses/org/apache/maven/plugins/maven-metadata.xml
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/maven-metadata.xml
+Downloading from dash-licenses: https://repo.eclipse.org/content/repositories/dash-licenses/org/codehaus/mojo/maven-metadata.xml
+Progress (1): 4.6 kBProgress (1): 12 kB Progress (1): 14 kBProgress (2): 14 kB | 3.1 kBProgress (2): 14 kB | 8.0 kBProgress (2): 14 kB | 11 kB Progress (2): 14 kB | 16 kBProgress (2): 14 kB | 20 kBProgress (2): 14 kB | 21 kB                           Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-metadata.xml (14 kB at 59 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/maven-metadata.xml (21 kB at 84 kB/s)
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for hawkBit :: Parent 0-SNAPSHOT:
+[INFO] 
+[INFO] hawkBit :: Parent .................................. SKIPPED
+[INFO] hawkBit :: Query Language :: JPA ................... SKIPPED
+[INFO] hawkBit :: Core .................................... SKIPPED
+[INFO] hawkBit :: Security :: Core ........................ SKIPPED
+[INFO] hawkBit :: Artifact :: Parent ...................... SKIPPED
+[INFO] hawkBit :: Artifact :: API ......................... SKIPPED
+[INFO] hawkBit :: Artifact :: Filesystem Artifact Repository SKIPPED
+[INFO] hawkBit :: Repository :: Parent .................... SKIPPED
+[INFO] hawkBit :: Repository :: API ....................... SKIPPED
+[INFO] hawkBit :: Repository :: Core ...................... SKIPPED
+[INFO] hawkBit :: Repository :: JPA API ................... SKIPPED
+[INFO] hawkBit :: Repository :: JPA EclipseLink Vendor .... SKIPPED
+[INFO] hawkBit :: Repository :: JPA Hibernate Vendor ...... SKIPPED
+[INFO] hawkBit :: Repository :: JPA Flyway Migration ...... SKIPPED
+[INFO] hawkBit :: Repository :: Test Utilities ............ SKIPPED
+[INFO] hawkBit :: Repository :: JPA Implementation ........ SKIPPED
+[INFO] hawkBit :: Repository :: JPA DB Init / Upgrade App . SKIPPED
+[INFO] hawkBit :: REST :: Core ............................ SKIPPED
+[INFO] hawkBit :: Auto-Configurations ..................... SKIPPED
+[INFO] hawkBit :: Management .............................. SKIPPED
+[INFO] hawkBit :: Management :: REST API .................. SKIPPED
+[INFO] hawkBit :: Management :: REST Resources ............ SKIPPED
+[INFO] hawkBit :: Management :: Spring Boot Starter ....... SKIPPED
+[INFO] hawkBit :: Management :: Server .................... SKIPPED
+[INFO] hawkBit :: DDI :: Parent ........................... SKIPPED
+[INFO] hawkBit :: DDI :: REST API ......................... SKIPPED
+[INFO] hawkBit :: DDI :: REST Resources ................... SKIPPED
+[INFO] hawkBit :: DDI :: Security ......................... SKIPPED
+[INFO] hawkBit :: DDI :: Spring Boot Starter .............. SKIPPED
+[INFO] hawkBit :: DDI :: Server ........................... SKIPPED
+[INFO] hawkBit :: DMF :: Parent ........................... SKIPPED
+[INFO] hawkBit :: DMF :: API .............................. SKIPPED
+[INFO] hawkBit :: DMF :: RabbitMq Test module ............. SKIPPED
+[INFO] hawkBit :: DMF :: AMQP 0.9 Implementation .......... SKIPPED
+[INFO] hawkBit :: DMF :: Spring Boot Starter .............. SKIPPED
+[INFO] hawkBit :: DMF :: Server ........................... SKIPPED
+[INFO] hawkBit :: Monolith :: Parent ...................... SKIPPED
+[INFO] hawkBit :: Monolith :: Spring Boot Starter ......... SKIPPED
+[INFO] hawkBit :: Monolith :: Server ...................... SKIPPED
+[INFO] hawkBit :: SDK :: Parent ........................... SKIPPED
+[INFO] hawkBit :: SDK :: Commons .......................... SKIPPED
+[INFO] hawkBit :: UI ...................................... SKIPPED
+[INFO] hawkBit :: SDK :: Management API SDK ............... SKIPPED
+[INFO] hawkBit :: SDK :: Device SDK ....................... SKIPPED
+[INFO] hawkBit :: SDK :: DMF SDK .......................... SKIPPED
+[INFO] hawkBit :: SDK :: Test / Example ................... SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.323 s
+[INFO] Finished at: 2025-11-19T17:04:39+02:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] No plugin found for prefix 'hawkbit-repository-jp' in the current project and in the plugin groups [org.apache.maven.plugins, org.codehaus.mojo] available from the repositories [local (/Users/maa1sf/.m2/repository), dash-licenses (https://repo.eclipse.org/content/repositories/dash-licenses), central (https://repo.maven.apache.org/maven2)] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/NoPluginFoundForPrefixException

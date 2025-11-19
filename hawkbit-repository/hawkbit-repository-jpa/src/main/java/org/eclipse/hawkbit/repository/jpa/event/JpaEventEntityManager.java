@@ -22,22 +22,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class JpaEventEntityManager implements EventEntityManager {
 
-    private final TenantAware tenantAware;
     private final EntityManager entityManager;
 
     /**
      * Constructor.
      *
-     * @param tenantAware the tenant aware
      * @param entityManager the entity manager
      */
-    public JpaEventEntityManager(final TenantAware tenantAware, final EntityManager entityManager) {
-        this.tenantAware = tenantAware;
+    public JpaEventEntityManager(final EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
     public <E extends TenantAwareBaseEntity> E findEntity(final String tenant, final Long id, final Class<E> entityType) {
-        return tenantAware.runAsTenant(tenant, () -> entityManager.find(entityType, id));
+        return TenantAware.runAsTenant(tenant, () -> entityManager.find(entityType, id));
     }
 }

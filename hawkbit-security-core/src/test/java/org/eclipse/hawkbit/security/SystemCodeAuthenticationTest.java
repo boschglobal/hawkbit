@@ -15,11 +15,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
-import java.util.concurrent.Callable;
 
-import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
-import org.eclipse.hawkbit.tenancy.TenantAware;
+import org.eclipse.hawkbit.context.SystemSecurityContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,30 +26,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 class SystemCodeAuthenticationTest {
-
-    private static final SystemSecurityContext SYSTEM_SECURITY_CONTEXT = new SystemSecurityContext(new TenantAware() {
-
-        @Override
-        public String getCurrentTenant() {
-            return "tenant";
-        }
-
-        @Override
-        public String getCurrentUsername() {
-            return "user";
-        }
-
-        @SneakyThrows
-        @Override
-        public <T> T runAsTenant(final String tenant, final Callable<T> callable) {
-            return callable.call();
-        }
-
-        @Override
-        public void runAsTenantAsUser(final String tenant, final String username, final Runnable runnable) {
-            runnable.run();
-        }
-    });
 
     @Test
     void testSerializationWithoutNull() {
@@ -92,7 +66,7 @@ class SystemCodeAuthenticationTest {
         final SecurityContext sc = SecurityContextHolder.createEmptyContext();
         sc.setAuthentication(auth);
         SecurityContextHolder.setContext(sc);
-        SYSTEM_SECURITY_CONTEXT.runAsSystemAsTenant(() -> {
+        SystemSecurityContext.runAsSystemAsTenant(() -> {
             final Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
             Assertions.assertThat(currentAuth.getClass().getSimpleName()).isEqualTo("SystemCodeAuthentication");
             Assertions.assertThat(currentAuth.getPrincipal()).isEqualTo(auth.getPrincipal());

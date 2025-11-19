@@ -10,27 +10,25 @@
 package org.eclipse.hawkbit.repository.jpa.acm;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.eclipse.hawkbit.security.SecurityContextSerializer.JSON_SERIALIZATION;
+import static org.eclipse.hawkbit.context.SecurityContextSerializer.JSON_SERIALIZATION;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.mockStatic;
 
 import java.util.Set;
 import java.util.concurrent.Callable;
 
 import lombok.SneakyThrows;
-import org.eclipse.hawkbit.ContextAware;
-import org.eclipse.hawkbit.im.authentication.SpPermission;
+import org.eclipse.hawkbit.auth.SpPermission;
+import org.eclipse.hawkbit.context.ContextAware;
+import org.eclipse.hawkbit.context.SecurityContextSerializer;
 import org.eclipse.hawkbit.repository.AutoAssignExecutor;
 import org.eclipse.hawkbit.repository.jpa.AbstractJpaIntegrationTest;
 import org.eclipse.hawkbit.repository.model.Rollout;
 import org.eclipse.hawkbit.repository.model.TargetFilterQuery;
-import org.eclipse.hawkbit.security.SecurityContextSerializer;
 import org.eclipse.hawkbit.tenancy.TenantAwareAuthenticationDetails;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -56,16 +54,7 @@ class ContextAwareTest extends AbstractJpaIntegrationTest {
     AutoAssignExecutor autoAssignExecutor;
 
     @Autowired
-    ContextAware contextAware;
-
-    @Autowired
     AuditorAware<String> auditorAware;
-
-    @BeforeEach
-    @AfterEach
-    void before() {
-        reset(contextAware);
-    }
 
     /**
      * Verifies acm context is persisted when creating Rollout
@@ -85,11 +74,13 @@ class ContextAwareTest extends AbstractJpaIntegrationTest {
      */
     @Test
     void verifyContextIsReusedWhenHandlingRollout() {
-        final SecurityContext securityContext = createContext(1);
+        try (final MockedStatic<ContextAware> mocked = mockStatic(ContextAware.class)) {
+            final SecurityContext securityContext = createContext(1);
 
-        // testdataFactory#createRollout will trigger a rollout handling
-        runInContext(securityContext, testdataFactory::createRollout);
-        verify(contextAware).runInContext(eq(JSON_SERIALIZATION.serialize(securityContext)), any(Runnable.class));
+            // testdataFactory#createRollout will trigger a rollout handling
+            runInContext(securityContext, testdataFactory::createRollout);
+            mocked.verify(() -> ContextAware.runInContext(eq(JSON_SERIALIZATION.serialize(securityContext)), any(Runnable.class)));
+        }
     }
 
     /**
@@ -110,14 +101,16 @@ class ContextAwareTest extends AbstractJpaIntegrationTest {
      */
     @Test
     void verifyContextIsReusedWhenCheckingForAutoAssignmentAllTargets() {
-        final SecurityContext securityContext = createContext(3);
+        try (final MockedStatic<ContextAware> mocked = mockStatic(ContextAware.class)) {
+            final SecurityContext securityContext = createContext(3);
 
-        runInContext(securityContext, testdataFactory::createTargetFilterWithTargetsAndActiveAutoAssignment);
-        runInContext(securityContext, () -> {
-            autoAssignExecutor.checkAllTargets();
-            return null;
-        });
-        verify(contextAware).runInContext(eq(JSON_SERIALIZATION.serialize(securityContext)), any(Runnable.class));
+            runInContext(securityContext, testdataFactory::createTargetFilterWithTargetsAndActiveAutoAssignment);
+            runInContext(securityContext, () -> {
+                autoAssignExecutor.checkAllTargets();
+                return null;
+            });
+            mocked.verify(() -> ContextAware.runInContext(eq(JSON_SERIALIZATION.serialize(securityContext)), any(Runnable.class)));
+        }
     }
 
     /**
@@ -125,14 +118,17 @@ class ContextAwareTest extends AbstractJpaIntegrationTest {
      */
     @Test
     void verifyContextIsReusedWhenCheckingForAutoAssignmentSingleTarget() {
-        final SecurityContext securityContext = createContext(4);
+        try (final MockedStatic<ContextAware> mocked = mockStatic(ContextAware.class)) {
+            final SecurityContext securityContext = createContext(4);
 
-        runInContext(securityContext, testdataFactory::createTargetFilterWithTargetsAndActiveAutoAssignment);
-        runInContext(securityContext, () -> {
-            autoAssignExecutor.checkSingleTarget(targetManagement.findAll(Pageable.ofSize(1)).getContent().get(0).getControllerId());
-            return null;
-        });
-        verify(contextAware).runInContext(eq(JSON_SERIALIZATION.serialize(securityContext)), any(Runnable.class));
+            runInContext(securityContext, testdataFactory::createTargetFilterWithTargetsAndActiveAutoAssignment);
+            runInContext(securityContext, () -> {
+                autoAssignExecutor.checkSingleTarget(targetManagement.findAll(Pageable.ofSize(1)).getContent().get(0).getControllerId());
+                return null;
+            });
+
+            mocked.verify(() -> ContextAware.runInContext(eq(JSON_SERIALIZATION.serialize(securityContext)), any(Runnable.class)));
+        }
     }
 
     private static SecurityContext createContext(final int testId) {

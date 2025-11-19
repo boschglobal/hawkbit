@@ -9,13 +9,16 @@
  */
 package org.eclipse.hawkbit.security.controller;
 
+import static org.eclipse.hawkbit.tenancy.configuration.TenantConfigurationProperties.TenantConfigurationKey.AUTHENTICATION_HEADER_AUTHORITY_NAME;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.hawkbit.repository.TenantConfigurationManagement;
-import org.eclipse.hawkbit.security.SystemSecurityContext;
+import org.eclipse.hawkbit.context.SystemSecurityContext;
+import org.eclipse.hawkbit.repository.helper.TenantConfigHelper;
 import org.eclipse.hawkbit.tenancy.TenantAware;
 import org.eclipse.hawkbit.tenancy.configuration.TenantConfigurationProperties.TenantConfigurationKey;
 import org.slf4j.Logger;
@@ -29,7 +32,7 @@ import org.springframework.security.core.Authentication;
 @Slf4j
 public class SecurityHeaderAuthenticator extends Authenticator.AbstractAuthenticator {
 
-    private static final Logger LOG_SECURITY_AUTH = LoggerFactory.getLogger("server-security.authentication");
+    private static final Logger LOG_SECURITY_AUTH = LoggerFactory.getLogger("server-security.auth");
 
     // Example Headers with Cert Information
     // Clientip: 217.24.201.180
@@ -51,15 +54,10 @@ public class SecurityHeaderAuthenticator extends Authenticator.AbstractAuthentic
     private final Callable<String> sslIssuerNameConfigGetter;
 
     public SecurityHeaderAuthenticator(
-            final TenantConfigurationManagement tenantConfigurationManagement, final TenantAware tenantAware,
-            final SystemSecurityContext systemSecurityContext,
             final String caCommonNameHeader, final String caAuthorityNameHeader) {
-        super(tenantConfigurationManagement, tenantAware, systemSecurityContext);
         this.caCommonNameHeader = caCommonNameHeader;
         this.sslIssuerHashBasicHeader = caAuthorityNameHeader;
-        sslIssuerNameConfigGetter = () -> systemSecurityContext.runAsSystem(
-                () -> tenantConfigurationManagement.getConfigurationValue(
-                        TenantConfigurationKey.AUTHENTICATION_HEADER_AUTHORITY_NAME, String.class).getValue());
+        sslIssuerNameConfigGetter = () -> TenantConfigHelper.getInstance().getConfigValue(AUTHENTICATION_HEADER_AUTHORITY_NAME, String.class);
     }
 
     @Override
@@ -76,13 +74,13 @@ public class SecurityHeaderAuthenticator extends Authenticator.AbstractAuthentic
         }
 
         if (!isEnabled(controllerSecurityToken)) {
-            log.debug("The gateway header authentication is disabled");
+            log.debug("The gateway header auth is disabled");
             return null;
         }
 
         final String sslIssuerHashValue = getIssuerHashHeader(
                 controllerSecurityToken,
-                tenantAware.runAsTenant(controllerSecurityToken.getTenant(), sslIssuerNameConfigGetter));
+                TenantAware.runAsTenant(controllerSecurityToken.getTenant(), sslIssuerNameConfigGetter));
         if (sslIssuerHashValue == null) {
             log.debug("The request contains the 'common name' header but trusted hash is not found");
             return null;

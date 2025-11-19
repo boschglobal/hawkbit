@@ -65,25 +65,25 @@ public class TenantConfigurationProperties {
     public static class TenantConfigurationKey {
 
         /**
-         * Header based authentication enabled.
+         * Header based auth enabled.
          */
-        public static final String AUTHENTICATION_HEADER_ENABLED = "authentication.header.enabled";
+        public static final String AUTHENTICATION_HEADER_ENABLED = "auth.header.enabled";
         /**
-         * Header based authentication authority name.
+         * Header based auth authority name.
          */
-        public static final String AUTHENTICATION_HEADER_AUTHORITY_NAME = "authentication.header.authority";
+        public static final String AUTHENTICATION_HEADER_AUTHORITY_NAME = "auth.header.authority";
         /**
-         * Target token based authentication enabled.
+         * Target token based auth enabled.
          */
-        public static final String AUTHENTICATION_TARGET_SECURITY_TOKEN_ENABLED = "authentication.targettoken.enabled";
+        public static final String AUTHENTICATION_TARGET_SECURITY_TOKEN_ENABLED = "auth.targettoken.enabled";
         /**
-         * Gateway token based authentication enabled.
+         * Gateway token based auth enabled.
          */
-        public static final String AUTHENTICATION_GATEWAY_SECURITY_TOKEN_ENABLED = "authentication.gatewaytoken.enabled";
+        public static final String AUTHENTICATION_GATEWAY_SECURITY_TOKEN_ENABLED = "auth.gatewaytoken.enabled";
         /**
          * Gateway token value.
          */
-        public static final String AUTHENTICATION_GATEWAY_SECURITY_TOKEN_KEY = "authentication.gatewaytoken.key";
+        public static final String AUTHENTICATION_GATEWAY_SECURITY_TOKEN_KEY = "auth.gatewaytoken.key";
         /**
          * See system default in {@link ControllerPollProperties#getPollingTime()}.
          */

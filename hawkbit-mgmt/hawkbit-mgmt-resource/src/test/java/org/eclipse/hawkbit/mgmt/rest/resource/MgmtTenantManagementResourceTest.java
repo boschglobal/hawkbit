@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.eclipse.hawkbit.im.authentication.SpPermission;
+import org.eclipse.hawkbit.auth.SpPermission;
 import org.eclipse.hawkbit.mgmt.json.model.system.MgmtSystemTenantConfigurationValueRequest;
 import org.eclipse.hawkbit.mgmt.rest.api.MgmtRestConstants;
 import org.eclipse.hawkbit.repository.DistributionSetTypeManagement;
@@ -46,7 +46,7 @@ public class MgmtTenantManagementResourceTest extends AbstractManagementApiInteg
     private static final String KEY_AUTO_CLOSE = "repository.actions.autoclose.enabled";
     private static final String ROLLOUT_APPROVAL_ENABLED = "rollout.approval.enabled";
 
-    private static final String AUTHENTICATION_GATEWAYTOKEN_ENABLED = "authentication.gatewaytoken.enabled";
+    private static final String AUTHENTICATION_GATEWAYTOKEN_ENABLED = "auth.gatewaytoken.enabled";
 
     private static final String AUTHENTICATION_GATEWAYTOKEN_KEY = "authentication.gatewaytoken.key";
     private static final String DEFAULT_DISTRIBUTION_SET_TYPE_KEY = "default.ds.type";
@@ -177,8 +177,8 @@ public class MgmtTenantManagementResourceTest extends AbstractManagementApiInteg
         //  TenantMetadata - DefaultDSType ID is valid,
         //in the end batch configuration update must fail, and thus, not a single config should be actually changed
         long testValidDistributionSetType = createTestDistributionSetType();
-        boolean oldRolloutApprovalConfig = (Boolean) tenantConfigurationManagement.getConfigurationValue(ROLLOUT_APPROVAL_ENABLED).getValue();
-        String oldAuthGatewayToken = (String) tenantConfigurationManagement.getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_KEY).getValue();
+        boolean oldRolloutApprovalConfig = (Boolean) tenantConfigurationManagement().getConfigurationValue(ROLLOUT_APPROVAL_ENABLED).getValue();
+        String oldAuthGatewayToken = (String) tenantConfigurationManagement().getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_KEY).getValue();
         //test TenantConfiguration with invalid config value, and a valid TenantMetadata - Default DistributionSetType id
         assertBatchConfigurationFails(!oldRolloutApprovalConfig, "invalid-config-value", oldAuthGatewayToken + "randomSuffix0",
                 testValidDistributionSetType, status().isBadRequest());
@@ -193,10 +193,10 @@ public class MgmtTenantManagementResourceTest extends AbstractManagementApiInteg
         //  all TenantConfiguration have valid and new values - using old values, inverted
         //  TenantMetadata - DefaultDSType ID is invalid
         //in the end batch configuration update must fail, and thus, not a single config should be actually changed.
-        boolean oldRolloutApprovalConfig = (Boolean) tenantConfigurationManagement.getConfigurationValue(ROLLOUT_APPROVAL_ENABLED).getValue();
-        boolean oldAuthGatewayTokenEnabled = (Boolean) tenantConfigurationManagement.getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_ENABLED)
+        boolean oldRolloutApprovalConfig = (Boolean) tenantConfigurationManagement().getConfigurationValue(ROLLOUT_APPROVAL_ENABLED).getValue();
+        boolean oldAuthGatewayTokenEnabled = (Boolean) tenantConfigurationManagement().getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_ENABLED)
                 .getValue();
-        String oldAuthGatewayToken = (String) tenantConfigurationManagement.getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_KEY).getValue();
+        String oldAuthGatewayToken = (String) tenantConfigurationManagement().getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_KEY).getValue();
 
         //invalid TenantMetadata Default DistributionSetType, it is expected to be a number. Testing invalid type - string
         //not a single configuration should be changed after the failure
@@ -242,13 +242,13 @@ public class MgmtTenantManagementResourceTest extends AbstractManagementApiInteg
         //assert all changes were applied after Rest Success
         assertEquals(updatedDistributionSetType, getActualDefaultDsType(),
                 "Change BatchConfiguration was successful but TenantMetadata - Default DistributionSetType was not actually changed.");
-        assertEquals(updatedRolloutApprovalEnabled, tenantConfigurationManagement.getConfigurationValue(ROLLOUT_APPROVAL_ENABLED).getValue(),
+        assertEquals(updatedRolloutApprovalEnabled, tenantConfigurationManagement().getConfigurationValue(ROLLOUT_APPROVAL_ENABLED).getValue(),
                 "Change BatchConfiguration was successful but TenantConfiguration property was not actually changed.");
         assertEquals(updatedAuthGatewayTokenEnabled,
-                tenantConfigurationManagement.getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_ENABLED).getValue(),
+                tenantConfigurationManagement().getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_ENABLED).getValue(),
                 "Change BatchConfiguration was successful but TenantConfiguration property was not actually changed.");
         assertEquals(updatedAuthGatewayTokenKey,
-                tenantConfigurationManagement.getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_KEY).getValue(),
+                tenantConfigurationManagement().getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_KEY).getValue(),
                 "Change BatchConfiguration was successful but TenantConfiguration property was not actually changed.");
     }
 
@@ -307,7 +307,7 @@ public class MgmtTenantManagementResourceTest extends AbstractManagementApiInteg
     @Test
     void getTenantConfigurationReadGWToken() throws Exception {
         getAs(withUser("tenant_admin", SpPermission.TENANT_CONFIGURATION), () -> {
-            tenantConfigurationManagement.addOrUpdateConfiguration(
+            tenantConfigurationManagement().addOrUpdateConfiguration(
                     TenantConfigurationProperties.TenantConfigurationKey.AUTHENTICATION_GATEWAY_SECURITY_TOKEN_KEY, "123");
             return null;
         });
@@ -356,10 +356,10 @@ public class MgmtTenantManagementResourceTest extends AbstractManagementApiInteg
     private void assertBatchConfigurationFails(Object newRolloutApprovalEnabled, Object newAuthGatewayTokenEnabled, Object newGatewayToken,
             Object newDistributionSetTypeId, ResultMatcher resultMatchers) throws Exception {
         long oldDefaultDsType = getActualDefaultDsType();
-        boolean oldRolloutApprovalConfig = (Boolean) tenantConfigurationManagement.getConfigurationValue(ROLLOUT_APPROVAL_ENABLED).getValue();
-        boolean oldAuthGatewayTokenEnabled = (Boolean) tenantConfigurationManagement.getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_ENABLED)
+        boolean oldRolloutApprovalConfig = (Boolean) tenantConfigurationManagement().getConfigurationValue(ROLLOUT_APPROVAL_ENABLED).getValue();
+        boolean oldAuthGatewayTokenEnabled = (Boolean) tenantConfigurationManagement().getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_ENABLED)
                 .getValue();
-        String oldAuthGatewayToken = (String) tenantConfigurationManagement.getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_KEY).getValue();
+        String oldAuthGatewayToken = (String) tenantConfigurationManagement().getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_KEY).getValue();
 
         JSONObject configuration = new JSONObject();
         configuration.put(ROLLOUT_APPROVAL_ENABLED, newRolloutApprovalEnabled);
@@ -375,12 +375,12 @@ public class MgmtTenantManagementResourceTest extends AbstractManagementApiInteg
         //Check if TenantMetadata and TenantConfiguration is not changed as Batch config failed
         assertEquals(oldDefaultDsType, getActualDefaultDsType(),
                 "Batch configuration update Failed, but TenantMetadata - DistributionSetType was actually changed.");
-        assertEquals(oldRolloutApprovalConfig, tenantConfigurationManagement.getConfigurationValue(ROLLOUT_APPROVAL_ENABLED).getValue(),
+        assertEquals(oldRolloutApprovalConfig, tenantConfigurationManagement().getConfigurationValue(ROLLOUT_APPROVAL_ENABLED).getValue(),
                 "Batch configuration update Failed, but TenantConfiguration was actually changed.");
         assertEquals(oldAuthGatewayTokenEnabled,
-                tenantConfigurationManagement.getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_ENABLED).getValue(),
+                tenantConfigurationManagement().getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_ENABLED).getValue(),
                 "Batch configuration update Failed, but TenantConfiguration was actually changed.");
-        assertEquals(oldAuthGatewayToken, tenantConfigurationManagement.getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_KEY).getValue(),
+        assertEquals(oldAuthGatewayToken, tenantConfigurationManagement().getConfigurationValue(AUTHENTICATION_GATEWAYTOKEN_KEY).getValue(),
                 "Batch configuration update Failed, but TenantConfiguration was actually changed.");
     }
 

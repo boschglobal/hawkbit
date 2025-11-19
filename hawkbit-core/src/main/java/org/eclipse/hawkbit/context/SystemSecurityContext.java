@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  */
-package org.eclipse.hawkbit.security;
+package org.eclipse.hawkbit.context;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,11 +22,13 @@ import java.util.concurrent.Callable;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.hawkbit.im.authentication.SpRole;
+import org.eclipse.hawkbit.audit.MdcHandler;
+import org.eclipse.hawkbit.auth.SpRole;
 import org.eclipse.hawkbit.tenancy.TenantAware;
 import org.eclipse.hawkbit.tenancy.TenantAwareAuthenticationDetails;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,25 +36,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
-import org.springframework.util.ObjectUtils;
 
 /**
  * A Service which provide to run system code.
  */
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SystemSecurityContext {
-
-    private final TenantAware tenantAware;
-    private final RoleHierarchy roleHierarchy;
-
-    public SystemSecurityContext(final TenantAware tenantAware) {
-        this(tenantAware, null);
-    }
-
-    public SystemSecurityContext(final TenantAware tenantAware, final RoleHierarchy roleHierarchy) {
-        this.tenantAware = tenantAware;
-        this.roleHierarchy = roleHierarchy;
-    }
 
     /**
      * Runs a given {@link Runnable} within a system security context, which is permitted to call secured system code. Often the system needs
@@ -63,11 +53,11 @@ public class SystemSecurityContext {
      *
      * @param runnable the runnable to call within the system security context
      */
-    public void runAsSystem(final Runnable runnable) {
+    public static void runAsSystem(final Runnable runnable) {
         runAsSystemAsTenant(() -> {
             runnable.run();
             return null;
-        }, tenantAware.getCurrentTenant());
+        }, TenantAware.getCurrentTenant());
     }
 
     /**
@@ -80,8 +70,8 @@ public class SystemSecurityContext {
      * @param callable the callable to call within the system security context
      * @return the return value of the {@link Callable#call()} method.
      */
-    public <T> T runAsSystem(final Callable<T> callable) {
-        return runAsSystemAsTenant(callable, tenantAware.getCurrentTenant());
+    public static <T> T runAsSystem(final Callable<T> callable) {
+        return runAsSystemAsTenant(callable, TenantAware.getCurrentTenant());
     }
 
     /**
@@ -97,11 +87,11 @@ public class SystemSecurityContext {
      */
     // The callable API throws a Exception and not a specific one
     @SuppressWarnings({ "squid:S2221", "squid:S00112" })
-    public <T> T runAsSystemAsTenant(final Callable<T> callable, final String tenant) {
+    public static <T> T runAsSystemAsTenant(final Callable<T> callable, final String tenant) {
         final SecurityContext oldContext = SecurityContextHolder.getContext();
         try {
             log.debug("Entering system code execution");
-            return tenantAware.runAsTenant(tenant, () -> {
+            return TenantAware.runAsTenant(tenant, () -> {
                 setSystemContext(SecurityContextHolder.getContext());
                 return MdcHandler.getInstance().callWithAuthRE(callable);
             });
@@ -120,11 +110,11 @@ public class SystemSecurityContext {
      * @param callable to call within the security context
      * @return the return value of the {@link Callable#call()} method.
      */
-    public <T> T runAsControllerAsTenant(@NotEmpty final String tenant, @NotNull final Callable<T> callable) {
+    public static <T> T runAsControllerAsTenant(@NotEmpty final String tenant, @NotNull final Callable<T> callable) {
         final SecurityContext oldContext = SecurityContextHolder.getContext();
         final List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(SpRole.CONTROLLER_ROLE_ANONYMOUS));
         try {
-            return tenantAware.runAsTenant(tenant, () -> {
+            return TenantAware.runAsTenant(tenant, () -> {
                 setCustomSecurityContext(tenant, oldContext.getAuthentication().getPrincipal(), authorities);
                 return MdcHandler.getInstance().callWithAuthRE(callable);
             });
@@ -140,28 +130,6 @@ public class SystemSecurityContext {
         return SecurityContextHolder.getContext().getAuthentication() instanceof SystemCodeAuthentication;
     }
 
-    @SuppressWarnings("java:S3776") // java:S3776 - better in one place for better readability
-    public boolean hasPermission(final String permission) {
-        final SecurityContext context = SecurityContextHolder.getContext();
-        if (context != null) {
-            final Authentication authentication = context.getAuthentication();
-            if (authentication != null) {
-                Collection<? extends GrantedAuthority> grantedAuthorities = authentication.getAuthorities();
-                if (!ObjectUtils.isEmpty(grantedAuthorities)) {
-                    if (roleHierarchy != null) {
-                        grantedAuthorities = roleHierarchy.getReachableGrantedAuthorities(grantedAuthorities);
-                    }
-                    for (final GrantedAuthority authority : grantedAuthorities) {
-                        if (authority.getAuthority().equals(permission)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     static void setSystemContext(final SecurityContext oldContext) {
         final Authentication oldAuthentication = oldContext.getAuthentication();
         final SecurityContextImpl securityContextImpl = new SecurityContextImpl();
@@ -169,7 +137,7 @@ public class SystemSecurityContext {
         SecurityContextHolder.setContext(securityContextImpl);
     }
 
-    private void setCustomSecurityContext(
+    private static void setCustomSecurityContext(
             final String tenantId, final Object principal, final Collection<? extends GrantedAuthority> authorities) {
         final AnonymousAuthenticationToken authenticationToken = new AnonymousAuthenticationToken(
                 UUID.randomUUID().toString(), principal, authorities);
@@ -181,7 +149,7 @@ public class SystemSecurityContext {
 
     /**
      * An implementation of the Spring's {@link Authentication} object which is used within a system security code block and
-     * wraps the original authentication object. The wrapped object contains the necessary {@link SpRole#SYSTEM_ROLE}
+     * wraps the original auth object. The wrapped object contains the necessary {@link SpRole#SYSTEM_ROLE}
      * which is allowed to execute all secured methods.
      */
     @SuppressWarnings("java:S4275") // java:S4275 - intentionally returns the "hold" objects

@@ -14,12 +14,11 @@ import static org.mockito.Mockito.when;
 
 import java.util.concurrent.Callable;
 
+import org.eclipse.hawkbit.context.SystemSecurityContext;
 import org.eclipse.hawkbit.repository.TenantConfigurationManagement;
-import org.eclipse.hawkbit.repository.helper.SystemSecurityContextHolder;
-import org.eclipse.hawkbit.repository.helper.TenantConfigurationManagementHolder;
+import org.eclipse.hawkbit.repository.helper.TenantConfigHelper;
 import org.eclipse.hawkbit.repository.model.TenantConfigurationValue;
 import org.eclipse.hawkbit.repository.rsql.VirtualPropertyResolver;
-import org.eclipse.hawkbit.security.SystemSecurityContext;
 import org.eclipse.hawkbit.tenancy.configuration.TenantConfigurationProperties.TenantConfigurationKey;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,8 +45,6 @@ class VirtualPropertyResolverTest {
 
     @MockitoBean
     private TenantConfigurationManagement confMgmt;
-    @MockitoBean
-    private SystemSecurityContext securityContext;
 
     private final VirtualPropertyResolver substitutor = new VirtualPropertyResolver();
 
@@ -90,7 +87,7 @@ class VirtualPropertyResolverTest {
     @ParameterizedTest
     @ValueSource(strings = { "${NOW_TS}", "${OVERDUE_TS}", "${overdue_ts}" })
     void resolveNowTimestampPlaceholder(final String placeholder) {
-        when(securityContext.runAsSystem(Mockito.any(Callable.class))).thenAnswer(a -> ((Callable<?>) a.getArgument(0)).call());
+        when(SystemSecurityContext.runAsSystem(Mockito.any(Callable.class))).thenAnswer(a -> ((Callable<?>) a.getArgument(0)).call());
         final String testString = "lhs=lt=" + placeholder;
 
         final String resolvedPlaceholders = substitutor.replace(testString);
@@ -101,13 +98,8 @@ class VirtualPropertyResolverTest {
     static class Config {
 
         @Bean
-        TenantConfigurationManagementHolder tenantConfigurationManagementHolder() {
-            return TenantConfigurationManagementHolder.getInstance();
-        }
-
-        @Bean
-        SystemSecurityContextHolder systemSecurityContextHolder() {
-            return SystemSecurityContextHolder.getInstance();
+        TenantConfigHelper tenantConfigHelper() {
+            return TenantConfigHelper.getInstance();
         }
     }
 }
