@@ -37,7 +37,6 @@ import jakarta.validation.constraints.NotEmpty;
 import org.eclipse.hawkbit.ql.jpa.QLSupport;
 import org.eclipse.hawkbit.repository.QuotaManagement;
 import org.eclipse.hawkbit.repository.TargetManagement;
-import org.eclipse.hawkbit.repository.TenantConfigurationManagement;
 import org.eclipse.hawkbit.repository.exception.EntityAlreadyExistsException;
 import org.eclipse.hawkbit.repository.exception.EntityNotFoundException;
 import org.eclipse.hawkbit.repository.jpa.JpaManagementHelper;
@@ -91,7 +90,7 @@ public class JpaTargetManagement
             final TargetRepository jpaRepository, final EntityManager entityManager,
             final JpaDistributionSetManagement distributionSetManagement, final QuotaManagement quotaManagement,
             final TargetTypeRepository targetTypeRepository,
-            final TargetTagRepository targetTagRepository, TenantConfigurationManagement tenantConfigurationManagement, TenantAware contextAware) {
+            final TargetTagRepository targetTagRepository, TenantAware contextAware) {
         super(jpaRepository, entityManager);
         this.distributionSetManagement = distributionSetManagement;
         this.quotaManagement = quotaManagement;
