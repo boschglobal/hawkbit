@@ -37,6 +37,7 @@ import jakarta.validation.constraints.NotEmpty;
 import org.eclipse.hawkbit.ql.jpa.QLSupport;
 import org.eclipse.hawkbit.repository.QuotaManagement;
 import org.eclipse.hawkbit.repository.TargetManagement;
+import org.eclipse.hawkbit.repository.TenantConfigurationManagement;
 import org.eclipse.hawkbit.repository.exception.EntityAlreadyExistsException;
 import org.eclipse.hawkbit.repository.exception.EntityNotFoundException;
 import org.eclipse.hawkbit.repository.jpa.JpaManagementHelper;
@@ -55,6 +56,7 @@ import org.eclipse.hawkbit.repository.model.DistributionSet;
 import org.eclipse.hawkbit.repository.model.Target;
 import org.eclipse.hawkbit.repository.model.TargetTag;
 import org.eclipse.hawkbit.repository.qfields.TargetFields;
+import org.eclipse.hawkbit.tenancy.TenantAware;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.data.domain.Page;
@@ -82,18 +84,20 @@ public class JpaTargetManagement
     private final QuotaManagement quotaManagement;
     private final TargetTypeRepository targetTypeRepository;
     private final TargetTagRepository targetTagRepository;
+    private final TenantAware contextAware;
 
     @SuppressWarnings("java:S107")
     protected JpaTargetManagement(
             final TargetRepository jpaRepository, final EntityManager entityManager,
             final JpaDistributionSetManagement distributionSetManagement, final QuotaManagement quotaManagement,
             final TargetTypeRepository targetTypeRepository,
-            final TargetTagRepository targetTagRepository) {
+            final TargetTagRepository targetTagRepository, TenantConfigurationManagement tenantConfigurationManagement, TenantAware contextAware) {
         super(jpaRepository, entityManager);
         this.distributionSetManagement = distributionSetManagement;
         this.quotaManagement = quotaManagement;
         this.targetTypeRepository = targetTypeRepository;
         this.targetTagRepository = targetTagRepository;
+        this.contextAware = contextAware;
     }
 
     @Override
@@ -382,7 +386,7 @@ public class JpaTargetManagement
 
     @Override
     public List<String> findGroups() {
-        return jpaRepository.findDistinctGroups();
+        return jpaRepository.findDistinctGroups(contextAware.getCurrentTenant());
     }
 
     @Override
