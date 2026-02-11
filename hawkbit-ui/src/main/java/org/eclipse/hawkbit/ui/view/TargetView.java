@@ -9,6 +9,7 @@
  */
 package org.eclipse.hawkbit.ui.view;
 
+import java.io.Serial;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,7 +92,10 @@ import org.springframework.util.ObjectUtils;
 @Route(value = "targets", layout = MainLayout.class)
 @RolesAllowed({ "TARGET_READ" })
 @Uses(Icon.class)
-public class TargetView extends TableView<TargetView.TargetWithDs, String> {
+public final class TargetView extends TableView<TargetView.TargetWithDs, String> {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public static final String STATUS = "Status";
     public static final String UPDATE = "Sync";
@@ -344,6 +348,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
 
     protected static class TargetDetailedView extends VerticalLayout {
 
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         private final Span targetId;
         private final TargetDetails targetDetails;
         private final TargetAssignedInstalled targetAssignedInstalled;
@@ -382,6 +389,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
     }
 
     private static class TargetDetails extends FormLayout {
+
+        @Serial
+        private static final long serialVersionUID = 1L;
 
         private final transient HawkbitMgmtClient hawkbitClient;
         private final TextArea description = new TextArea(Constants.DESCRIPTION);
@@ -444,6 +454,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
 
     private static class TargetAssignedInstalled extends FormLayout {
 
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         private final transient HawkbitMgmtClient hawkbitClient;
         private final LinkedTextArea assigned = new LinkedTextArea("Assigned Distribution Set", "/distribution_sets?");
         private final LinkedTextArea installed = new LinkedTextArea("Installed Distribution Set", "/distribution_sets?");
@@ -488,6 +501,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
     }
 
     private static class TargetTags extends VerticalLayout {
+
+        @Serial
+        private static final long serialVersionUID = 1L;
 
         private final transient HawkbitMgmtClient hawkbitClient;
         private final ComboBox<MgmtTag> tagSelector = new ComboBox<>(TAG);
@@ -601,6 +617,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
 
     private static class TargetMetadata extends VerticalLayout {
 
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         public static final String KEY = "Key";
         public static final String VALUE = "Value";
 
@@ -672,7 +691,10 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
         }
     }
 
-    public static class TargetActionsHistoryLayout extends VerticalLayout {
+    public static final class TargetActionsHistoryLayout extends VerticalLayout {
+
+        @Serial
+        private static final long serialVersionUID = 1L;
 
         private final TargetActionsHistory targetActionsHistory;
 
@@ -688,6 +710,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
         }
 
         public static class ActionStepsGrid extends Grid<ActionStepsGrid.ActionStepEntry> {
+
+            @Serial
+            private static final long serialVersionUID = 1L;
 
             private final transient HawkbitMgmtClient hawkbitClient;
             private transient MgmtTarget target;
@@ -775,6 +800,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
 
     private static class RegisterDialog extends Utils.BaseDialog<Void> {
 
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         private final Select<MgmtTargetType> type;
         private final TextField controllerId;
         private final TextField name;
@@ -850,6 +878,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
 
     private static class AssignDialog extends Utils.BaseDialog<Void> {
 
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         private final ComboBox<MgmtDistributionSet> distributionSet;
         private final Select<MgmtActionType> actionType;
         private final DateTimePicker forceTime = new DateTimePicker("Force Time");
@@ -918,6 +949,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
 
     private static class CreateTagDialog extends Utils.BaseDialog<Void> {
 
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         private final TextField name;
         private final TextArea description = new TextArea(Constants.DESCRIPTION);
 
@@ -961,6 +995,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
 
     private static class AddMetadataDialog extends Utils.BaseDialog<Void> {
 
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         private final TextField key;
         private final TextField value;
 
@@ -1001,6 +1038,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
 
     private static class TargetStatusCell extends HorizontalLayout {
 
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         private TargetStatusCell(final MgmtTarget target) {
             final MgmtPollStatus pollStatus = target.getPollStatus();
             add(pollStatusIconMapper(pollStatus));
@@ -1023,6 +1063,9 @@ public class TargetView extends TableView<TargetView.TargetWithDs, String> {
     }
 
     private static class TargetUpdateStatusCell extends HorizontalLayout {
+
+        @Serial
+        private static final long serialVersionUID = 1L;
 
         private TargetUpdateStatusCell(final MgmtTarget target) {
             final String targetUpdateStatus = Optional.ofNullable(target.getUpdateStatus()).orElse("unknown");

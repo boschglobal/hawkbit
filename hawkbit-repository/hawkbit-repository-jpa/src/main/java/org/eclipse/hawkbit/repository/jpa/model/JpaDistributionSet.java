@@ -9,7 +9,6 @@
  */
 package org.eclipse.hawkbit.repository.jpa.model;
 
-import java.io.Serial;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -68,9 +67,6 @@ public class JpaDistributionSet
         extends AbstractJpaNamedVersionedEntity
         implements DistributionSet, WithMetadata<String, String>, EventAwareEntity {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false, targetEntity = JpaDistributionSetType.class)
     @JoinColumn(name = "ds_type", nullable = false, updatable = false)
     @NotNull
@@ -81,17 +77,14 @@ public class JpaDistributionSet
             name = "sp_ds_sm",
             joinColumns = { @JoinColumn(name = "ds_id", nullable = false) },
             inverseJoinColumns = { @JoinColumn(name = "sm_id", nullable = false) })
-    private Set<SoftwareModule> modules = new HashSet<>();
+    private Set<JpaSoftwareModule> modules = new HashSet<>();
 
     @ManyToMany(targetEntity = JpaDistributionSetTag.class)
     @JoinTable(
             name = "sp_ds_tag",
-            joinColumns = {
-                    @JoinColumn(name = "ds", nullable = false) },
-            inverseJoinColumns = {
-                    @JoinColumn(
-                            name = "tag", nullable = false) })
-    private Set<DistributionSetTag> tags = new HashSet<>();
+            joinColumns = { @JoinColumn(name = "ds", nullable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "tag", nullable = false) })
+    private Set<JpaDistributionSetTag> tags = new HashSet<>();
 
     // no cascade option on an ElementCollection, the target objects are always persisted, merged, removed with their parent
     @Getter
@@ -128,7 +121,7 @@ public class JpaDistributionSet
     }
 
     @SuppressWarnings("java:S1144") // used via reflection copy utils
-    private JpaDistributionSet setModules(final Set<SoftwareModule> modules) {
+    private JpaDistributionSet setModules(final Set<JpaSoftwareModule> modules) {
         if (modules == null) {
             return this; // do not change
         }
@@ -163,14 +156,14 @@ public class JpaDistributionSet
         }).orElse(true);
     }
 
-    public void addModule(final SoftwareModule softwareModule) {
+    public void addModule(final JpaSoftwareModule softwareModule) {
         if (isLocked()) {
             throw new LockedException(JpaDistributionSet.class, getId(), "ADD_SOFTWARE_MODULE");
         }
 
         checkTypeCompatability(softwareModule);
 
-        final Optional<SoftwareModule> found = modules.stream()
+        final Optional<JpaSoftwareModule> found = modules.stream()
                 .filter(module -> module.getId().equals(softwareModule.getId())).findAny();
         if (found.isPresent()) {
             return;
@@ -199,14 +192,14 @@ public class JpaDistributionSet
         return Collections.unmodifiableSet(tags);
     }
 
-    public void addTag(final DistributionSetTag tag) {
+    public void addTag(final JpaDistributionSetTag tag) {
         if (tags == null) {
             tags = new HashSet<>();
         }
         tags.add(tag);
     }
 
-    public void removeTag(final DistributionSetTag tag) {
+    public void removeTag(final JpaDistributionSetTag tag) {
         if (tags != null) {
             tags.remove(tag);
         }

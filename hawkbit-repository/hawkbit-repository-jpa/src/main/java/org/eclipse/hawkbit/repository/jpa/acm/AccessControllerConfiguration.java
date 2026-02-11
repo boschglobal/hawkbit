@@ -9,6 +9,7 @@
  */
 package org.eclipse.hawkbit.repository.jpa.acm;
 
+import java.io.Serial;
 import java.lang.reflect.Proxy;
 import java.util.Collection;
 import java.util.List;
@@ -70,7 +71,7 @@ public class AccessControllerConfiguration {
         return new AccessController<>() {
 
             @Override
-            @SuppressWarnings("unchecked")
+            @SuppressWarnings({"unchecked", "rawtypes"})
             public Optional<Specification<JpaAction>> getAccessRules(final Operation operation) {
                 return targetAccessController.getAccessRules(map(operation)).map(targetSpec -> (actionRoot, query, cb) -> {
                     final Join<JpaAction, JpaTarget> targetJoin = actionRoot.join(JpaAction_.target);
@@ -161,6 +162,9 @@ public class AccessControllerConfiguration {
     }
 
     private static class RawAuthoritiesAuthentication implements Authentication {
+
+        @Serial
+        private static final long serialVersionUID = 1L;
 
         private final Authentication authentication;
         private final transient SingletonSupplier<List<? extends GrantedAuthority>> rawAuthoritiesSupplier;
