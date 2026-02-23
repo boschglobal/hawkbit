@@ -137,7 +137,7 @@ maven/mavencentral/io.github.openfeign/feign-hc5/13.6, Apache-2.0, approved, #21
 maven/mavencentral/io.github.openfeign/feign-hc5/13.8, Apache-2.0, approved, #26050
 maven/mavencentral/io.github.openfeign/feign-slf4j/13.6, Apache-2.0, approved, clearlydefined
 maven/mavencentral/io.methvin/directory-watcher/0.19.0, Apache-2.0, approved, clearlydefined
-maven/mavencentral/io.micrometer/context-propagation/1.1.4, , restricted, clearlydefined
+maven/mavencentral/io.micrometer/context-propagation/1.1.4, Apache-2.0, approved, #26109
 maven/mavencentral/io.micrometer/micrometer-commons/1.15.9, Apache-2.0 AND (Apache-2.0 AND MIT), approved, #23144
 maven/mavencentral/io.micrometer/micrometer-core/1.15.9, Apache-2.0 AND (Apache-2.0 AND MIT), approved, #23142
 maven/mavencentral/io.micrometer/micrometer-observation/1.15.9, Apache-2.0, approved, #23139
@@ -248,7 +248,7 @@ maven/mavencentral/org.hibernate.orm/hibernate-core/6.6.42.Final, (EPL-2.0 OR BS
 maven/mavencentral/org.hibernate.orm/hibernate-jpamodelgen/6.6.42.Final, EPL-2.0 OR BSD-3-Clause AND LGPL-2.1-only AND MIT, approved, #18221
 maven/mavencentral/org.hibernate.validator/hibernate-validator/8.0.3.Final, Apache-2.0 AND CC-PDDC, approved, #18198
 maven/mavencentral/org.javassist/javassist/3.30.2-GA, Apache-2.0 AND LGPL-2.1-or-later AND MPL-1.1, approved, #12108
-maven/mavencentral/org.jboss.logging/jboss-logging/3.6.2.Final, , restricted, clearlydefined
+maven/mavencentral/org.jboss.logging/jboss-logging/3.6.2.Final, Apache-2.0, approved, #26108
 maven/mavencentral/org.jetbrains.kotlin/kotlin-reflect/1.9.25, Apache-2.0, approved, clearlydefined
 maven/mavencentral/org.jetbrains.kotlin/kotlin-stdlib/1.9.25, Apache-2.0, approved, #11827
 maven/mavencentral/org.jetbrains/annotations/13.0, Apache-2.0, approved, clearlydefined
