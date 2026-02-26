@@ -22,7 +22,7 @@ public interface TenantConfiguration extends TenantAwareBaseEntity {
     /**
      * Maximum length of tenant configuration value.
      */
-    int VALUE_MAX_SIZE = 512;
+    int VALUE_MAX_SIZE = 32768;
 
     /**
      * @return key of the entry
