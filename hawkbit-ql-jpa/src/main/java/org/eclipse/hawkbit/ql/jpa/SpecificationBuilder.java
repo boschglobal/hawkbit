@@ -158,6 +158,10 @@ public class SpecificationBuilder<T> {
                             : cb.and(equal(mapPath.key(), split[1]), compare(comparison, toMapValuePath(mapPath)));
                 }
             } else if (attribute instanceof SetAttribute<?, ?> setAttribute) {
+                // Option 4 : make autoConfirmation Set in Jpa Target and add check & logic here :
+//                if (split.length == 1) {
+//                    // existence check
+//                }
                 if (split.length < 2 || ObjectUtils.isEmpty(split[1])) {
                     throw new QueryException(
                             UNSUPPORTED_FIELD,
@@ -176,6 +180,28 @@ public class SpecificationBuilder<T> {
                     }
                     return compare(comparison, deepGetPath(pathResolver.getPath(attribute), split[1]));
                 }
+            } else if (attribute.getPersistentAttributeType() == Attribute.PersistentAttributeType.ONE_TO_MANY
+                    && split.length == 1) { // OR ? attribute instanceof PluralAttribute<?,?,?>
+                // boolean filtering on ONE_TO_MANY relationship presence
+                final Path<?> joinPath = pathResolver.getPath(attribute);
+                final String value = String.valueOf(comparison.getValue());
+                final boolean exists;
+                if ("true".equalsIgnoreCase(value)) {
+                    exists = true;
+                } else if ("false".equalsIgnoreCase(value)) {
+                    exists = false;
+                } else {
+                    throw new QueryException(INVALID_SYNTAX,
+                            String.format("Only a boolean value is supported for existance check on %s", getPathContext(comparison)));
+                }
+                final Path<?> idPath = joinPath.get("id");
+                return switch (op) {
+                    case EQ -> exists ? cb.isNotNull(idPath) : cb.isNull(idPath);
+                    case NE ->  exists ? cb.isNull(idPath) : cb.isNotNull(idPath);
+                    default -> throw new QueryException(INVALID_SYNTAX,
+                            String.format("Operator %s is not supported for existence check on %s", op, getPathContext(comparison)));
+                };
+
             } else { // singular attribute (BASIC and EMBEDDABLE) or plural (ListAttribute of entities)
                 final Path<?> attributePath = pathResolver.getPath(attribute);
                 return compare(comparison, split.length > 1 ? deepGetPath(attributePath, split[1]) : attributePath);
