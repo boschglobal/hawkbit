@@ -62,8 +62,7 @@ Code for a single feature typically spans 3–5 modules. Each domain folder (`ha
 - **`hawkbit-rest/hawkbit-rest-api`** / **`hawkbit-rest/hawkbit-rest-core`** — Shared REST scaffolding + `AbstractRestIntegrationTest` (MockMvc base).
 - **`hawkbit-artifact/hawkbit-artifact-api`** — `ArtifactStorage` contract; **`hawkbit-artifact-fs`** — filesystem impl.
 - **`hawkbit-ql-jpa`** — RSQL → JPA Specification translator.
-- **`hawkbit-core`** — Permissions (`SpPermission`), multi-tenancy (`o.e.h.tenancy`), cross-cutting utilities.
-- **`hawkbit-security-core`** — Authentication/authorization primitives.
+- **`hawkbit-core`** — Permissions (`SpPermission` in `o.e.h.security`), multi-tenancy (`o.e.h.tenancy`), authentication/authorization primitives, cross-cutting utilities.
 - **`hawkbit-autoconfigure`** — Spring Boot auto-configuration wiring.
 - **`hawkbit-ui`** — Vaadin 25 Flow admin console (pure Java views; separate boot jar, default port 8088; talks to mgmt API via Feign through `HawkbitMgmtClient`).
 - **`hawkbit-sdk/{commons,demo,device,dmf,mgmt}`** — Client SDK + demo simulator (device/DMF/Mgmt consumers).
