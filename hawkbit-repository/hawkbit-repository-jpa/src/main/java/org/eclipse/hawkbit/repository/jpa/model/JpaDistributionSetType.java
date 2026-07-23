@@ -76,6 +76,25 @@ public class JpaDistributionSetType extends AbstractJpaTypeEntity implements Dis
                 .collect(Collectors.toSet());
     }
 
+    // reads the smType id straight from each element's @EmbeddedId key (see DistributionSetTypeElement#getSmTypeId) - no
+    // per-element smType navigation, so no query storm. Consumers that only compare types by id (e.g.
+    // DistributionSet#isComplete, containsModuleType) must use these instead of the entity-returning variants.
+    @Override
+    public Set<Long> getMandatoryModuleTypeIds() {
+        return elements.stream()
+                .filter(DistributionSetTypeElement::isMandatory)
+                .map(DistributionSetTypeElement::getSmTypeId)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<Long> getOptionalModuleTypeIds() {
+        return elements.stream()
+                .filter(element -> !element.isMandatory())
+                .map(DistributionSetTypeElement::getSmTypeId)
+                .collect(Collectors.toSet());
+    }
+
     public JpaDistributionSetType setMandatoryModuleTypes(final Set<SoftwareModuleType> smType) {
         return replaceOrAddModuleTypes(smType, true, true);
     }

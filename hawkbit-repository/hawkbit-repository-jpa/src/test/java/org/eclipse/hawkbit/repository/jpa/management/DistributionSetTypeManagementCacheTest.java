@@ -26,11 +26,11 @@ class DistributionSetTypeManagementCacheTest extends AbstractTypeManagementCache
     /**
      * Scenario: evict, then read the same DSType six times.
      * Proves: only the first read (cache miss) hits the DB; the next five are served from cache — 0 queries —
-     * eliminating the repeated DSType + N×SoftwareModuleType query storm that motivated the cache.
+     * eliminating the repeated DSType read on every request.
      * <p/>
-     * Note: a single miss still issues several queries — EclipseLink resolves each element's smType
-     * {@code @ManyToOne} with its own ReadObjectQuery, which JOIN FETCH / an entity graph cannot collapse. That
-     * per-miss cost is inherent and amortized by the cache; the point is it happens once per entity, not per request.
+     * Note: the per-element {@code smType} by-id storm no longer fires even on a miss — {@code smType} is a lazy,
+     * non-{@code @MapsId} association, so loading the type's elements reads the ids from their keys without resolving the
+     * full {@link org.eclipse.hawkbit.repository.model.SoftwareModuleType} entities.
      */
     @Test
     void verifyRepeatedReadsOnlyMissHitsDb() {
@@ -52,21 +52,24 @@ class DistributionSetTypeManagementCacheTest extends AbstractTypeManagementCache
     }
 
     /**
-     * Scenario: load a DSType on a cold cache, then walk its mandatory/optional module types.
-     * Proves: the cached entity is complete — elements and their smTypes are fetched eagerly during the load, so
-     * navigating them afterwards triggers no extra query (no lazy N+1 hidden behind the cache).
+     * Scenario: load a DSType on a cold cache, then read its mandatory/optional module type IDS.
+     * Proves: the ids come straight from each element's {@code @EmbeddedId} key, so reading them triggers no query - not
+     * even the per-element {@code smType} by-id resolution (which is why {@code smType} is intentionally a plain lazy
+     * {@code @ManyToOne}, not {@code @MapsId}). This is the query-free path the hot consumers ({@code isComplete},
+     * {@code containsModuleType}) rely on. Full {@link org.eclipse.hawkbit.repository.model.SoftwareModuleType} entities
+     * are deliberately lazy now; callers that need them resolve by id through the cached SoftwareModuleTypeManagement.
      * The default test DS type has 1 mandatory (os) and 2 optional (runtime, app) module types.
      */
     @Test
-    void verifyCachedEntityModuleTypesAccessibleWithoutQuery() {
+    void verifyCachedEntityModuleTypeIdsAccessibleWithoutQuery() {
         evict(JpaDistributionSetType.class.getSimpleName(), standardDsType.getId());
         final DistributionSetType loaded = distributionSetTypeManagement.get(standardDsType.getId());
 
         final long before = readQueries();
-        assertThat(loaded.getMandatoryModuleTypes()).hasSize(1); // os
-        assertThat(loaded.getOptionalModuleTypes()).hasSize(2); // runtime + app
+        assertThat(loaded.getMandatoryModuleTypeIds()).hasSize(1); // os
+        assertThat(loaded.getOptionalModuleTypeIds()).hasSize(2); // runtime + app
         assertThat(readQueries() - before)
-                .as("module types on the fully-loaded cached entity must not hit DB")
+                .as("module type ids read from the element keys must not hit DB (no smType entity navigation)")
                 .isZero();
     }
 }

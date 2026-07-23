@@ -30,6 +30,18 @@ public interface DistributionSetType extends Type {
     Set<SoftwareModuleType> getOptionalModuleTypes();
 
     /**
+     * @return ids of the {@link #getMandatoryModuleTypes()}. The JPA implementation serves these straight from the
+     *         relation's composite keys, i.e. without loading the full {@link SoftwareModuleType} entities - which is
+     *         what the id-based checks below rely on to avoid a per-element query storm.
+     */
+    Set<Long> getMandatoryModuleTypeIds();
+
+    /**
+     * @return ids of the {@link #getOptionalModuleTypes()}. See {@link #getMandatoryModuleTypeIds()}.
+     */
+    Set<Long> getOptionalModuleTypeIds();
+
+    /**
      * Checks if the given {@link SoftwareModuleType} is in this {@link DistributionSetType}.
      *
      * @param softwareModuleType search for
@@ -46,7 +58,7 @@ public interface DistributionSetType extends Type {
      * @return <code>true</code> if found
      */
     default boolean containsMandatoryModuleType(final SoftwareModuleType softwareModuleType) {
-        return getMandatoryModuleTypes().stream().anyMatch(element -> element.getId().equals(softwareModuleType.getId()));
+        return getMandatoryModuleTypeIds().contains(softwareModuleType.getId());
     }
 
     /**
@@ -56,6 +68,6 @@ public interface DistributionSetType extends Type {
      * @return <code>true</code> if found
      */
     default boolean containsOptionalModuleType(final SoftwareModuleType softwareModuleType) {
-        return getOptionalModuleTypes().stream().anyMatch(element -> element.getId().equals(softwareModuleType.getId()));
+        return getOptionalModuleTypeIds().contains(softwareModuleType.getId());
     }
 }

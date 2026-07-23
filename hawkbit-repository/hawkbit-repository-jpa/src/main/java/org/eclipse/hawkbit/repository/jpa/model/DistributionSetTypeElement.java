@@ -14,6 +14,7 @@ import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -44,9 +45,8 @@ public class DistributionSetTypeElement {
     private JpaDistributionSetType dsType;
 
     @Getter
-    @MapsId("smType")
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "software_module_type", nullable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "software_module_type", nullable = false, updatable = false, insertable = false)
     private JpaSoftwareModuleType smType;
 
     @Setter
@@ -66,6 +66,15 @@ public class DistributionSetTypeElement {
         this.dsType = dsType;
         this.smType = smType;
         this.mandatory = mandatory;
+    }
+
+    /**
+     * @return the {@link SoftwareModuleType} id read from the loaded {@code @EmbeddedId} key - available with the element
+     *         row, so it requires <b>no</b> extra query (unlike navigating the lazy {@link #getSmType()}, which
+     *         EclipseLink resolves by primary key per element).
+     */
+    public Long getSmTypeId() {
+        return key.getSmType();
     }
 
     @Override
