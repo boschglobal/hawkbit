@@ -141,10 +141,11 @@ public class AmqpMessageDispatcherService extends BaseAmqpService {
     }
 
     protected DmfDownloadAndUpdateRequest createDownloadAndUpdateRequest(
-            final Target target, final Long actionId, final String externalRef,
-            final Map<SoftwareModule, Map<String, String>> softwareModules) {
+        final Target target, final Long actionId,
+        final Map<SoftwareModule, Map<String, String>> softwareModules, final String externalRef) {
         return new DmfDownloadAndUpdateRequest(
-                actionId, asSystem(target::getSecurityToken), convertToAmqpSoftwareModules(target, softwareModules), externalRef);
+            actionId, asSystem(target::getSecurityToken),
+            convertToAmqpSoftwareModules(target, softwareModules), externalRef);
     }
 
     /**
@@ -211,10 +212,11 @@ public class AmqpMessageDispatcherService extends BaseAmqpService {
     }
 
     protected DmfConfirmRequest createConfirmRequest(
-            final Target target, final Long actionId, final String externalRef,
-            final Map<SoftwareModule, Map<String, String>> softwareModules) {
+        final Target target, final Long actionId,
+        final Map<SoftwareModule, Map<String, String>> softwareModules, final String externalRef) {
         return new DmfConfirmRequest(
-                actionId, asSystem(target::getSecurityToken), convertToAmqpSoftwareModules(target, softwareModules), externalRef);
+            actionId, asSystem(target::getSecurityToken),
+            convertToAmqpSoftwareModules(target, softwareModules), externalRef);
     }
 
     /**
@@ -349,9 +351,9 @@ public class AmqpMessageDispatcherService extends BaseAmqpService {
         if (action.isWaitingConfirmation()) {
             // For the moment the confirmation request is the same as download and update request.
             // It can be modified not to expose all the software modules in the future.
-            request = createConfirmRequest(target, action.getId(), action.getExternalRef(), modules);
+            request = createConfirmRequest(target, action.getId(), modules, action.getExternalRef());
         } else {
-            request = createDownloadAndUpdateRequest(target, action.getId(), action.getExternalRef(), modules);
+            request = createDownloadAndUpdateRequest(target, action.getId(), modules, action.getExternalRef());
         }
 
         final Message message = getMessageConverter().toMessage(
